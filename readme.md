@@ -8,9 +8,25 @@ Make sure you have...
 - a sudo enabled non root user
 - nginx installed
 - firewall permissions set
+- git installed
+
+## get your django code
+Instructions here for cloning in your git repo and editing nessesary steps to make it run in this environment
+
+1. decide how you want to get your django code. The method here will be using git to clone in our github repo. But ultimately all of this is trying to get your django directory living under your environment directory so that /opt/myenv/(django project name here) is the root directory of your django project.
+1. make sure git is installed `sudo apt-get install git`
+1. you will need to setup a deploy key to pull in your code from github
+1. run `ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`
+1. get the key you just created by running `cat /home/[username here]/.ssh/id_rsa.pub`
+1. copy the key that is output into the terminal and go to the settings page of your github repo.
+1. click on the 'deploy keys' tab on the sidenav and add the key.
+1. you should now be able to clone in your repo into the directory 
+1. `cd /opt/myenv`
+1. `git clone githubprojecturl`
+1. to be clear about file structure, the project you just cloned down should be a sibling to the /bin/ directory that lives under the directory that was created when your environment was created. 
 
 ## setup virtual env
-1. run `sudo apt-get install python-virtualenv`
+1. run `sudo apt-get install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx`
 1. run `sudo virtualenv /opt/myenv` This creates a virtual environment in the directory specified. 
 1. run `source /opt/myenv/bin/activate` after running your command prompt should indicate the virtual environment.
 1. run `pip3 install django`
@@ -38,20 +54,6 @@ These steps will setup your postgresql database
 1. run `GRANT ALL PRIVILEGES ON DATABASE mydb TO myuser;` passing in the user you created earlier instead of 'myuser' the ';' at the end of the line is required. you should see GRANT outputed in the terminal to confirm it worked correctly
 1. from the postgress shell you can hit control+d to exit the shell. use control+d again once more to exit the postgres user and return to your original user
 
-## get your django code
-Instructions here for cloning in your git repo and editing nessesary steps to make it run in this environment
-
-1. decide how you want to get your django code. The method here will be using git to clone in our github repo. But ultimately all of this is trying to get your django directory living under your environment directory so that /opt/myenv/(django project name here) is the root directory of your django project.
-1. make sure git is installed `sudo apt-get install git`
-1. you will need to setup a deploy key to pull in your code from github
-1. run `ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`
-1. get the key you just created by running `cat /home/[username here]/.ssh/id_rsa.pub`
-1. copy the key that is output into the terminal and go to the settings page of your github repo.
-1. click on the 'deploy keys' tab on the sidenav and add the key.
-1. you should now be able to clone in your repo into the directory 
-1. `cd /opt/myenv`
-1. `git clone githubprojecturl`
-1. to be clear about file structure, the project you just cloned down should be a sibling to the /bin/ directory that lives under the directory that was created when your environment was created. 
 
 Now we need to change a few settings on your project to make it run with postgres database
 1. navigate to your django settings.py file and open it up in your prefered terminal text editor.
