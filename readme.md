@@ -27,8 +27,8 @@ when you see words formatted like that you will not actually type out the {} bra
 mkdir {myproject}
 cd {myproject}
 ```
-1. create a virtual environment for development `virtualenv env`
-1. activate your virtual environment `source env/bin/activate`
+1. create a virtual environment for development `virtualenv {env}`
+1. activate your virtual environment `source {env}/bin/activate`
 1. install django `pip install django`
 1. create your django project `django-admin startproject {myproject}`
 1. cd into the directory `cd {myproject}`
@@ -71,7 +71,7 @@ Now then we will install a few extra things to run your django code
 
 ```
 sudo apt update
-sudo apt install python3-pip python3-dev sqlite3 curl
+sudo apt install python3-pip python3-dev sqlite3 curl gunicorn
 sudo -H pip install --upgrade pip
 sudo -H pip install virtualenv
 ```
@@ -136,14 +136,14 @@ Requires=gunicorn.socket
 After=network.target
 
 [Service]
-User=[username of your virtual machine user]
+User={virtualuser}
 Group=www-data
 WorkingDirectory=/directory/to/rootof/djangoproject
 ExecStart=/directory/to/environment/env/bin/gunicorn \
           --access-logfile - \
           --workers 3 \
           --bind unix:/run/gunicorn.sock \
-          [projectname].wsgi:application
+          {myproject}.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
@@ -188,7 +188,7 @@ run `sudo nano /etc/nginx/sites-available/{myproject}`
 ```
 server {
     listen 80;
-    server_name server_domain_or_IP;
+    server_name {ip};
 
     location = /favicon.ico { access_log off; log_not_found off; }
     location /static/ {
