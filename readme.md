@@ -90,6 +90,7 @@ pip install -r requirements.txt
 python manage.py makemigrations
 python manage.py migrate
 python manage.py collectstatic
+sudo ufw allow 8000
 python manage.py runserver 0.0.0.0:8000
 ```
 1. now open up your browser and navigate to the ip address of your droplet followed by :8000 for example if your ip adress is 123.123.123.12, navigate to 123.123.123.12:8000
@@ -105,7 +106,6 @@ At this point you could leave everything as it, suspend the process run it in th
 In your virtual machine, make sure you are in your virtual environment and cd into the root of the django project
 run
 ```
-sudo ufw allow 8000
 pip install gunicorn
 gunicorn --bind 0.0.0.0:8000 {myproject}.wsgi
 ```
