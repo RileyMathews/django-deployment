@@ -72,8 +72,8 @@ Now then we will install a few extra things to run your django code
 ```
 sudo apt update
 sudo apt install python3-pip python3-dev sqlite3 curl gunicorn
-sudo -H pip install --upgrade pip
-sudo -H pip install virtualenv
+sudo -H pip3 install --upgrade pip
+sudo -H pip3 install virtualenv
 ```
 
 Now then decide where you want the project to live on your virtual machine. We will follow the same file structure as we did on your local machine. A virtual environment directory that will live as a sibling to your git repo
