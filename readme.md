@@ -4,6 +4,18 @@ This is a step by step guide in how to go from absolutely no code or virtual mac
 
 This guide will assume understanding of basic django development principals and shell commands.
 
+## notes on what should be matching
+anywhere you see here the word myproject wrapped in {} like {myproject} that should be replaced with the name of the directory you choose for your directory that is a parent of your environment directory and django directory
+
+anywhere you see {virtualuser} replace it with the username you created for your virtual machine
+
+anywhere you see {env} replace it with the name of your virtual environment directory name
+
+anywhere you see {ip} replace it with the ip address for your droplet
+
+when you see {github} replace it with the link to your github repo code
+
+when you see words formatted like that you will not actually type out the {} brackets
 
 ## create your digital ocean droplet
 1. on digital ocean create a droplet using ubuntu version 18.*
@@ -12,14 +24,14 @@ This guide will assume understanding of basic django development principals and 
 ## create your local django code
 1. on your local machine create a directory that will serve as the parent container for your project
 ```
-mkdir myproject
-cd myproject
+mkdir {myproject}
+cd {myproject}
 ```
 1. create a virtual environment for development `virtualenv env`
 1. activate your virtual environment `source env/bin/activate`
 1. install django `pip install django`
-1. create your django project `django-admin startproject myproject`
-1. cd into the directory `cd myproject`
+1. create your django project `django-admin startproject {myproject}`
+1. cd into the directory `cd {myproject}`
 1. touch a gitignore file and add anything you would for your normal django development workflow
 1. create a pip requirements file with `pip freeze -l > requirements.txt`
 1. create a git repo and push it up to a github repo
@@ -27,14 +39,14 @@ cd myproject
 git init
 git add .
 git commit -m "initial commit"
-git remote add origin [copy url from your github repo]
+git remote add origin {github}
 git push origin master
 ```
 
 At this point do what you need to make sure your django project can run locally and loading up the web page will present the default django landing page
 
 ## setup django for deployment
-1. open up the django projects settings.py file and find the line that starts with ALLOWED_HOSTS, change that line to read like this, substituting in the ip address from your digital ocean droplet `ALLOWED_HOSTS = ['123.123.123.12']`
+1. open up the django projects settings.py file and find the line that starts with ALLOWED_HOSTS, change that line to read like this, substituting in the ip address from your digital ocean droplet `ALLOWED_HOSTS = ['{ip}']`
 1. navigate to the bottom of the file and add as the very last line `STATIC_ROOT = os.path.join(BASE_DIR, 'static')`
 1. at this point confirm nothing we have done has caused any errors when running the project locally
 1. if everything still works commit changes to master and push to github
@@ -66,9 +78,9 @@ sudo -H pip install virtualenv
 
 Now then decide where you want the project to live on your virtual machine. We will follow the same file structure as we did on your local machine. A virtual environment directory that will live as a sibling to your git repo
 
-1. From the directory you have decided run `virtualenv [environmentname]`
-1. activate the environment with `source [environmentname]/bin/activate`
-1. now then pull in your github code with `git clone [github url]`
+1. From the directory you have decided run `virtualenv {env}`
+1. activate the environment with `source {env}/bin/activate`
+1. now then pull in your github code with `git clone {github}`
 1. if the clone command got a permissioned denied error you likely forgot to add your deploy key to the github project
 
 ## start your project
@@ -86,7 +98,7 @@ python manage.py runserver 0.0.0.0:8000
 At this point you could leave everything as it, suspend the process run it in the background and quietly leave the virtual machine with the dev server still serving your application. However this would cause some problems if you want to log back into your server and stop the dev server to update your code or do anything really. if somehow the port is accidentally left running you can kill the process by doing the following...
 
 1. find the process that is running on port 8000 by running `sudo lsof -i:8080`
-1. this should print out the process, get the id number and run `kill [number]`
+1. this should print out the process, get the id number and run `kill [process number]`
 1. the django server should now be stopped
 
 ## testing gunicorn can serve the application
@@ -95,7 +107,7 @@ run
 ```
 sudo ufw allow 8000
 pip install gunicorn
-gunicorn --bind 0.0.0.0:8000 nameofyourapp.wsgi
+gunicorn --bind 0.0.0.0:8000 {myproject}.wsgi
 ```
 Navigating to ipaddress:8000 in your browser should once again display the splash page
 
@@ -171,7 +183,7 @@ if that worked then you can move onto the next step
 
 
 ## setting up nginx
-run `sudo nano /etc/nginx/sites-available/myproject`
+run `sudo nano /etc/nginx/sites-available/{myproject}`
 
 ```
 server {
@@ -192,7 +204,7 @@ server {
 
 create a systemlink to the sites-enabled directory with 
 ```
-sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled
+sudo ln -s /etc/nginx/sites-available/{myproject} /etc/nginx/sites-enabled
 ```
 check for syntax errors with `sudo nginx -t`
 
