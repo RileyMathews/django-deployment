@@ -230,6 +230,9 @@ sudo systemctl restart nginx
 ## recommended further research
 Some fun things that you can research further to improve the deployment of your project
 
+### automated deployment
+There are tools such as 'fabric' 'ansible' that might be useful in automating deployment from your local repo into the virtual machines code base. 
+
 ### switching from sqlite3 to postgresql
 I used sqlite3 on my deployment server so that the development database and deployment database is the same. This is to make sure code can be seamlessly integrated and we can keep the development environment as close as possible to the production environment. sqlite3 can handle roughly 1,000 users per day. If you think your application would handle that you may want to look at transitioning your app to use postgresql. It is recommended if you switch to also use postgresql locally while developing.
 
