@@ -19,6 +19,8 @@ when you see words formatted like that you will not actually type out the {} bra
 
 ## create your digital ocean droplet
 1. on digital ocean create a droplet using ubuntu version 18.*
+1. if you do not have a key set up with digital ocean yet you will need to add one. If you do not have any ssh key setup on your machine you will need to do that first.
+1. once your droplet is ready click 'create'
 1. get the ip address for your droplet. that is all we will need for the time being
 
 ## create your local django code
@@ -43,7 +45,7 @@ git remote add origin {github}
 git push origin master
 ```
 
-At this point do what you need to make sure your django project can run locally and loading up the web page will present the default django landing page
+At this point do what you need to make sure your django project can run locally and loading up the web page will present the default django landing page. If your django project will not run locally troubleshoot that until it is working before moving on. 
 
 ## setup django for deployment
 1. open up the django projects settings.py file and find the line that starts with ALLOWED_HOSTS, change that line to read like this, substituting in the ip address from your digital ocean droplet `ALLOWED_HOSTS = ['{ip}']`
