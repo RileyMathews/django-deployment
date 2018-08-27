@@ -5,7 +5,7 @@ This is a step by step guide in how to go from absolutely no code or virtual mac
 This guide will assume understanding of basic django development principals and shell commands.
 
 ## notes on what should be matching
-anywhere you see here the word myproject wrapped in {} like {myproject} that should be replaced with the name of the directory you choose for your directory that is a parent of your environment directory and django directory
+anywhere you see here the word myproject wrapped in {} like {myproject} that should be replaced with the name of the directory you choose for your directory that is your django project which you run your 'manage.py' file from.
 
 anywhere you see {virtualuser} replace it with the username you created for your virtual machine
 
