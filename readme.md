@@ -48,7 +48,8 @@ git push origin master
 At this point do what you need to make sure your django project can run locally and loading up the web page will present the default django landing page. If your django project will not run locally troubleshoot that until it is working before moving on. 
 
 ## setup django for deployment
-1. open up the django projects settings.py file and find the line that starts with ALLOWED_HOSTS, change that line to read like this, substituting in the ip address from your digital ocean droplet `ALLOWED_HOSTS = ['{ip}']`
+1. open up the django projects settings.py file and find the line that starts with ALLOWED_HOSTS, change that line to read like this, substituting in the ip address from your digital ocean droplet `ALLOWED_HOSTS = ['{ip}', '127.0.0.1', 'localhost']`
+1. if you already know what domain or subdomain your app will be living on you can also add that to the list as well, to do a catchall for sub domains you can list it as `['*.exampledomain.com']`, the * will catch any subdomain. 
 1. navigate to the bottom of the file and add as the very last line `STATIC_ROOT = os.path.join(BASE_DIR, 'static')`
 1. at this point confirm nothing we have done has caused any errors when running the project locally
 1. if everything still works commit changes to master and push to github
@@ -58,6 +59,14 @@ At this point do what you need to make sure your django project can run locally 
 Rather than copy a bunch of commands go read this wonderful guide already written about how to setup your vps. 
 Go through every step until the point you have your firewall setup
 https://github.com/stevebrownlee/vps-setup
+
+## install oh my zsh (optional)
+If you would like to have something slightly more user friendly than the default bash terminal follow these steps 
+
+1. run `sudo apt install zsh`
+1. then run `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
+
+If the above throws errors you likely forgot to install curl and or git while setting up your virtual machine.
 
 ## setup your virtual machine with your django code
 The first thing you will need to do is generate a deploy key on your virtual machine, and add it to your github repo so you are allowed to pull in your code. 
