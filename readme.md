@@ -159,6 +159,7 @@ ExecStart=/directory/to/environment/env/bin/gunicorn \
 [Install]
 WantedBy=multi-user.target
 ```
+Note the WorkingDirectory and ExecStart paths above should be the path to django and environment directories on your machine, these will be different based on your app and environment names. 
 
 test the install worked by running...
 ```
@@ -212,6 +213,8 @@ server {
     }
 }
 ```
+Once again note: server_name, and 'root' path above should be changed based on your machines ip and environments.
+server_name can also be the domain name you are going to use for the project. 
 
 create a systemlink to the sites-enabled directory with 
 ```
